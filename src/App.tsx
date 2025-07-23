@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import DemoReport from './components/DemoReport';
-import LiveAnalysisDemo from './components/LiveAnalysisDemo';
+import HeroImageCarousel from './components/HeroImageCarousel';
 import PainPointCard from './components/PainPointCard';
 import InteractiveCaseStudy from './components/InteractiveCaseStudy';
 import ROIShowcase from './components/ROIShowcase';
@@ -58,10 +58,11 @@ function App() {
       </motion.nav>
 
       {/* 区域1：英雄首屏区 */}
-      <section className="bg-gradient-to-br from-indigo-50 via-white to-blue-50 py-20">
+      <section className="bg-gradient-to-br from-indigo-50 via-white to-blue-50 pt-8 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-stretch min-h-[600px]">
             <motion.div
+              className="flex flex-col justify-center"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -119,12 +120,12 @@ function App() {
               </motion.div>
             </motion.div>
             <motion.div 
-              className="relative"
+              className="relative flex items-center"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <LiveAnalysisDemo />
+              <HeroImageCarousel />
             </motion.div>
           </div>
         </div>
@@ -865,34 +866,34 @@ function App() {
                      {/* 最终行动号召 */}
            <motion.div 
              className="text-center"
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ delay: 0.4 }}
-           >
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
              <div className="text-xl font-bold text-yellow-300 mb-8">
-               天使合伙人席位即将售罄，价格马上上涨。立即行动，锁定骨折优惠！
+            天使合伙人席位即将售罄，价格马上上涨。立即行动，锁定骨折优惠！
              </div>
-             
-             <motion.div
+          
+          <motion.div
                className="flex justify-center"
-               initial={{ opacity: 0, scale: 0.8 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ delay: 0.6 }}
-             >
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+          >
                <PulseAnimation intensity={1.2}>
-                 <AnimatedButton
-                   onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                   variant="primary"
-                   size="lg"
+              <AnimatedButton
+                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+                variant="primary"
+                size="lg"
                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black hover:from-yellow-300 hover:to-orange-400 font-bold text-xl px-12 py-4 shadow-2xl"
-                 >
+              >
                    🚀 立即抢占最后席位，告别采购赌博！
-                 </AnimatedButton>
-               </PulseAnimation>
+              </AnimatedButton>
+            </PulseAnimation>
              </motion.div>
-           </motion.div>
+          </motion.div>
         </div>
       </AnimatedSection>
 
@@ -929,7 +930,7 @@ function App() {
         transition={{ delay: 2, duration: 0.5, type: "spring" }}
       >
         <motion.button
-          onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
           className="relative w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:from-orange-400 hover:to-red-500 transition-all duration-300 group"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
