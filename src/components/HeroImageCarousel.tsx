@@ -10,33 +10,33 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-// 暂时使用同一张图片，后续可以替换为不同的图片
+// 使用新生成的4:3比例AI主题图片(512×384)
 const heroImages = [
   {
     id: 1,
-    src: '/hero-image.png',
-    alt: 'AI决策大脑 - 数据分析',
+    src: 'https://p26-aiop-sign.byteimg.com/tos-cn-i-vuqhorh59i/20250723204222250F68037324DC120C82-6011-0~tplv-vuqhorh59i-image.image?rk3s=7f9e702d&x-expires=1753360949&x-signature=cf7MxFxFzHQWgu5QoxLKVP9KCJw%3D',
+    alt: 'AI智能分析 - 数据驱动决策',
     title: 'AI智能分析',
     subtitle: '精准识别风险点'
   },
   {
     id: 2,
-    src: '/hero-image.png',
-    alt: 'AI决策大脑 - 风险评估',
+    src: 'https://p26-aiop-sign.byteimg.com/tos-cn-i-vuqhorh59i/202507232042374D05D4A2A3F803089FD2-7568-0~tplv-vuqhorh59i-image.image?rk3s=7f9e702d&x-expires=1753360965&x-signature=9%2BHuT3E1MU9sLcXF6meGNr3gHtY%3D',
+    alt: '风险评估报告 - 量化分析',
     title: '风险评估报告',
     subtitle: '量化决策依据'
   },
   {
     id: 3,
-    src: '/hero-image.png',
-    alt: 'AI决策大脑 - 决策建议',
+    src: 'https://p3-aiop-sign.byteimg.com/tos-cn-i-vuqhorh59i/2025072320425206B1B64CC6AD2A14F616-8073-0~tplv-vuqhorh59i-image.image?rk3s=7f9e702d&x-expires=1753360979&x-signature=EM1gRhXH8PXo%2Fa0ZJ8bc6MAgzzY%3D',
+    alt: '智能决策建议 - AI推荐',
     title: '智能决策建议',
     subtitle: '告别采购赌博'
   },
   {
     id: 4,
-    src: '/hero-image.png',
-    alt: 'AI决策大脑 - 实时监控',
+    src: 'https://p9-aiop-sign.byteimg.com/tos-cn-i-vuqhorh59i/202507232043064F46E705FEEC4A1204D1-1984-0~tplv-vuqhorh59i-image.image?rk3s=7f9e702d&x-expires=1753360995&x-signature=dWNOHR6lGgpzhveQVoFNFbaNqD0%3D',
+    alt: '24/7实时监控 - 永不停歇',
     title: '24/7实时监控',
     subtitle: '永不疲倦的大脑'
   }
@@ -91,39 +91,8 @@ const HeroImageCarousel: React.FC = () => {
                 }}
               />
               
-              {/* 渐变遮罩 */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20" />
-              
-              {/* 文字内容覆盖层 - 居中显示 */}
-              <motion.div 
-                className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 md:p-12"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <motion.div 
-                  className="bg-black/30 backdrop-blur-sm rounded-xl p-6 max-w-lg"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <motion.h3 
-                    className="text-3xl md:text-4xl font-bold text-white mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    {image.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-xl text-gray-200"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    {image.subtitle}
-                  </motion.p>
-                </motion.div>
-              </motion.div>
+              {/* 轻微的渐变遮罩，仅用于提升导航控件的可见性 */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
             </div>
           </SwiperSlide>
         ))}
