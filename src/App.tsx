@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DemoReport from './components/DemoReport';
+import LiveAnalysisDemo from './components/LiveAnalysisDemo';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { AnimatedCounter, AnimatedNumber, PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
+import Icon from './components/Icon';
 
 // 倒计时hook
 const useCountdown = (targetDate: Date) => {
@@ -240,17 +242,7 @@ function App() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <AnimatedCard className="bg-white rounded-2xl shadow-2xl p-6">
-                <div className="bg-gray-100 rounded-lg h-80 flex items-center justify-center overflow-hidden">
-                  <motion.img
-                    src="/hero-image.png"
-                    alt="AI决策大脑"
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </AnimatedCard>
+              <LiveAnalysisDemo />
             </motion.div>
           </div>
         </div>
@@ -271,10 +263,10 @@ function App() {
           
           <AnimatedContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {[
-              { img: "/pain-point-1.png", title: "凭感觉补货", desc: "心里没底，夜夜难眠" },
-              { img: "/pain-point-2.png", title: "差评突然增多", desc: "不知源头，应对无力" },
-              { img: "/pain-point-3.png", title: "团队手动分析", desc: "耗时耗力，效率低下" },
-              { img: "/pain-point-4.png", title: "误判形势", desc: "库存积压，资金占用" }
+              { icon: "confused", title: "凭感觉补货", desc: "心里没底，夜夜难眠" },
+              { icon: "warning", title: "差评突然增多", desc: "不知源头，应对无力" },
+              { icon: "manual", title: "团队手动分析", desc: "耗时耗力，效率低下" },
+              { icon: "decline", title: "误判形势", desc: "库存积压，资金占用" }
             ].map((pain, index) => (
               <AnimatedItem key={index} className="p-6">
                 <AnimatedCard className="h-full">
@@ -283,7 +275,7 @@ function App() {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <img src={pain.img} alt={pain.title} className="max-h-full max-w-full object-contain" />
+                    <Icon type={pain.icon as any} />
                   </motion.div>
                   <h3 className="text-lg font-semibold mb-2">{pain.title}</h3>
                   <p className="text-gray-600">{pain.desc}</p>
@@ -665,10 +657,14 @@ function App() {
               viewport={{ once: true }}
             >
               <motion.div 
-                className="w-32 h-32 bg-gray-300 rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center"
+                className="w-32 h-32 rounded-full mx-auto lg:mx-0 mb-6 overflow-hidden"
                 whileHover={{ scale: 1.05, rotate: 5 }}
               >
-                <span className="text-2xl">👨‍💻</span>
+                <img 
+                  src="/founder-avatar.png" 
+                  alt="资深亚马逊运营专家" 
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               <h3 className="text-xl font-bold mb-4">资深亚马逊运营专家</h3>
               <p className="text-gray-600 mb-6">
