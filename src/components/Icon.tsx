@@ -5,21 +5,12 @@ import {
   ClockCircleOutlined,
   FallOutlined,
   ExclamationCircleOutlined,
-  StopOutlined,
   TeamOutlined,
-  LineChartOutlined,
-  FireOutlined,
-  DollarCircleOutlined,
-  ThunderboltOutlined,
-  HeartOutlined,
   BellOutlined,
-  LoadingOutlined,
   BarChartOutlined,
-  UserOutlined,
   FrownOutlined,
   AlertOutlined,
-  RightOutlined,
-  FileDoneOutlined
+  RightOutlined
 } from '@ant-design/icons';
 
 interface IconProps {

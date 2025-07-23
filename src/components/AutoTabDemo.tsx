@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Icon from './Icon';
+import { motion } from 'framer-motion';
 
 interface AgentTab {
   id: number;
@@ -15,7 +14,6 @@ const AutoTabDemo: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [demoData, setDemoData] = useState<any>({});
   const stepIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const tabSwitchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -123,7 +121,7 @@ const AutoTabDemo: React.FC = () => {
         }
       });
     }, 1800); // 每1.8秒执行一步，给更多时间展示内容
-  }, [activeTab, isPlaying, agents.length, clearTimers]);
+  }, [activeTab, isPlaying, agents, clearTimers]);
 
   // 手动切换tab
   const handleTabClick = useCallback((index: number) => {
@@ -159,7 +157,7 @@ const AutoTabDemo: React.FC = () => {
       
       return () => clearTimeout(initTimer);
     }
-  }, []); // 只在组件挂载时执行
+  }, [isPlaying, startDemo]); // 依赖 isPlaying 和 startDemo
 
   useEffect(() => {
     return () => {

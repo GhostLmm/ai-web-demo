@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
 import '@leenguyen/react-flip-clock-countdown/dist/index.css';
 import { AnimatedButton, AnimatedCard } from './AnimatedButton';
-import { AnimatedCounter, AnimatedNumber } from './AnimatedCounter';
+import { AnimatedNumber } from './AnimatedCounter';
 
 // 支付弹窗组件
 const PaymentModal = ({ isOpen, onClose, selectedPlan }: { 
@@ -220,7 +220,7 @@ const EnhancedPricingSection: React.FC = () => {
     const initialTimer = setTimeout(reduceSeats, 3000);
     
     return () => clearTimeout(initialTimer);
-  }, []);
+  }, [purchasers]);
 
   const handlePurchase = (plan: any) => {
     setSelectedPlan(plan);
