@@ -1,144 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import DemoReport from './components/DemoReport';
 import LiveAnalysisDemo from './components/LiveAnalysisDemo';
 import PainPointCard from './components/PainPointCard';
 import InteractiveCaseStudy from './components/InteractiveCaseStudy';
 import ROIShowcase from './components/ROIShowcase';
 import AutoTabDemo from './components/AutoTabDemo';
+import EnhancedPricingSection from './components/EnhancedPricingSection';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
-import { AnimatedCounter, AnimatedNumber, PulseAnimation } from './components/AnimatedCounter';
+import { PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
-import Icon from './components/Icon';
 
-// 倒计时hook
-const useCountdown = (targetDate: Date) => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
 
-      if (distance > 0) {
-        setTimeLeft({
-          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
-        });
-      }
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
-  return timeLeft;
-};
-
-// 增强的模态框组件
-const PaymentModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg p-8 max-w-md w-full"
-            initial={{ scale: 0.8, opacity: 0, y: 50 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 50 }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 300, 
-              damping: 25 
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-center mb-6">
-              <motion.h3 
-                className="text-xl font-bold text-gray-900"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                完成支付
-              </motion.h3>
-              <motion.button 
-                onClick={onClose} 
-                className="text-gray-400 hover:text-gray-600"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
-            </div>
-            
-            <motion.div 
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <motion.div 
-                className="bg-gray-100 p-8 rounded-lg mb-4"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="w-48 h-48 bg-gray-300 mx-auto flex items-center justify-center rounded">
-                  <span className="text-gray-600">微信支付二维码</span>
-                </div>
-              </motion.div>
-              <p className="text-sm text-gray-600 mb-4">
-                请使用微信扫描上方二维码完成支付
-              </p>
-              <p className="text-xs text-gray-500">
-                支付后请截图，并添加客服微信：<span className="font-bold">ai-sales-001</span>
-              </p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [remainingSeats, setRemainingSeats] = useState({
-    angel: 3,
-    early: 11,
-    standard: 15
-  });
-
-  // 设置倒计时目标时间（72小时后）
-  const targetDate = new Date(Date.now() + 72 * 60 * 60 * 1000);
-  const timeLeft = useCountdown(targetDate);
-
-  // 模拟剩余名额减少
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRemainingSeats(prev => ({
-        ...prev,
-        angel: Math.max(0, prev.angel - Math.floor(Math.random() * 2)),
-        early: Math.max(0, prev.early - Math.floor(Math.random() * 3)),
-        standard: Math.max(0, prev.standard - Math.floor(Math.random() * 2))
-      }));
-    }, 30000); // 30秒更新一次
-
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -168,7 +45,7 @@ function App() {
               <a href="#pricing" className="text-gray-700 hover:text-indigo-600">定价</a>
               <a href="#demo" className="text-gray-700 hover:text-indigo-600">演示</a>
               <AnimatedButton 
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
                 variant="pulse"
                 size="sm"
               >
@@ -444,132 +321,7 @@ function App() {
       </AnimatedSection>
 
       {/* 区域6：核心转化区 */}
-      <section id="pricing" className="py-20 bg-indigo-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              加入我们，成为第一批用AI优化库存的聪明卖家
-            </h2>
-            <p className="text-xl text-indigo-200 mb-8">仅限本微信群</p>
-            <p className="text-lg text-indigo-300 mb-8">阶梯团购，越早越优惠，名额售罄价格立即上涨！</p>
-            
-            {/* 倒计时器 */}
-            <motion.div 
-              className="bg-indigo-800 rounded-lg p-6 inline-block mb-12"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="text-lg font-semibold mb-4">距早鸟价结束仅剩：</div>
-              <div className="flex space-x-4 text-center">
-                {[
-                  { value: timeLeft.days, label: "天" },
-                  { value: timeLeft.hours, label: "时" },
-                  { value: timeLeft.minutes, label: "分" },
-                  { value: timeLeft.seconds, label: "秒" }
-                ].map((time, index) => (
-                  <div key={index} className="bg-white text-indigo-900 rounded-lg p-3 min-w-[80px]">
-                    <AnimatedCounter 
-                      value={time.value} 
-                      className="text-2xl font-bold"
-                    />
-                    <div className="text-sm">{time.label}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-          
-          {/* 价格方案 */}
-          <AnimatedContainer className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              { 
-                title: "天使合伙人", 
-                price: 3999, 
-                original: 12999, 
-                seats: remainingSeats.angel,
-                available: remainingSeats.angel > 0 
-              },
-              { 
-                title: "早鸟先锋", 
-                price: 5999, 
-                original: 12999, 
-                seats: remainingSeats.early,
-                available: remainingSeats.angel === 0 
-              },
-              { 
-                title: "标准团购", 
-                price: 7999, 
-                original: 12999, 
-                seats: remainingSeats.standard,
-                available: false 
-              }
-            ].map((plan, index) => (
-              <AnimatedItem key={index}>
-                <AnimatedCard 
-                  className="bg-white text-gray-900 rounded-2xl p-8 relative h-full"
-                  hoverScale={1.05}
-                >
-                  {plan.seats <= 5 && plan.seats > 0 && (
-                    <motion.div 
-                      className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-bold"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      仅剩{plan.seats}席
-                    </motion.div>
-                  )}
-                  
-                  <div className="text-center">
-                    <h3 className="text-xl font-bold mb-2">{plan.title}</h3>
-                    <div className="mb-4">
-                      <motion.span 
-                        className="text-4xl font-bold text-indigo-600"
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        ¥{plan.price.toLocaleString()}
-                      </motion.span>
-                      <div className="text-sm text-gray-500">
-                        原价 <span className="line-through">¥{plan.original.toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <div className="text-sm text-red-600 font-semibold mb-6">
-                      剩余 <AnimatedNumber from={plan.seats + 5} to={plan.seats} duration={2} /> 席
-                    </div>
-                    <AnimatedButton
-                      onClick={() => setIsModalOpen(true)}
-                      disabled={!plan.available}
-                      variant={plan.available ? "primary" : "secondary"}
-                      className="w-full"
-                    >
-                      {plan.available ? "立即抢占" : plan.seats === 0 ? "已售罄" : "排队预定"}
-                    </AnimatedButton>
-                  </div>
-                </AnimatedCard>
-              </AnimatedItem>
-            ))}
-          </AnimatedContainer>
-          
-          <motion.div 
-            className="text-center mt-8 text-indigo-200 text-sm"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-          >
-            支付后请截图，并添加客服微信：<span className="font-bold text-white">ai-sales-001</span>
-          </motion.div>
-        </div>
-      </section>
+      <EnhancedPricingSection />
 
       {/* 区域7：价值打包区 */}
       <AnimatedSection className="py-20 bg-white">
@@ -821,7 +573,7 @@ function App() {
           >
             <PulseAnimation intensity={1.1}>
               <AnimatedButton
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
                 variant="primary"
                 size="lg"
                 className="bg-white text-indigo-900 hover:bg-gray-100"
@@ -856,8 +608,7 @@ function App() {
         </motion.div>
       </footer>
 
-      {/* 支付模态框 */}
-      <PaymentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
 
       {/* 浮动按钮 */}
       <FloatingActionButton 
