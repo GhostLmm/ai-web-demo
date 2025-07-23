@@ -1,56 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
 import { AnimatedButton, AnimatedCard } from './AnimatedButton';
 import { AnimatedCounter, AnimatedNumber } from './AnimatedCounter';
-
-// 倒计时hook
-const useCountdown = (targetDate: Date) => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    isUrgent: false
-  });
-
-  const calculateTimeLeft = useCallback(() => {
-    const now = new Date().getTime();
-    const distance = targetDate.getTime() - now;
-
-    if (distance > 0) {
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      // 最后24小时标记为紧急
-      const totalHoursLeft = days * 24 + hours;
-      
-      return {
-        days,
-        hours,
-        minutes,
-        seconds,
-        isUrgent: totalHoursLeft <= 24
-      };
-    } else {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, isUrgent: true };
-    }
-  }, [targetDate]);
-
-  useEffect(() => {
-    // 立即执行一次计算
-    setTimeLeft(calculateTimeLeft());
-    
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    
-    return () => clearInterval(timer);
-  }, [calculateTimeLeft]);
-
-  return timeLeft;
-};
 
 // 支付弹窗组件
 const PaymentModal = ({ isOpen, onClose, selectedPlan }: { 
@@ -208,8 +161,7 @@ const EnhancedPricingSection: React.FC = () => {
 
   // 设置倒计时目标时间（72小时后），并确保它只被计算一次
   const [targetDate] = useState(() => new Date(Date.now() + 72 * 60 * 60 * 1000));
-  const timeLeft = useCountdown(targetDate);
-
+  
   // 购买者名单
   const purchasers = [
     '深圳张总', '杭州李总', '广州王总', '北京刘总', '上海陈总',
@@ -385,47 +337,25 @@ const EnhancedPricingSection: React.FC = () => {
 
         {/* 倒计时器 */}
         <motion.div 
-          className={`text-center mb-6 ${timeLeft.isUrgent ? 'animate-pulse' : ''}`}
+          className="text-center mb-6"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <div className={`inline-block rounded-xl p-4 ${
-            timeLeft.isUrgent 
-              ? 'bg-red-600 shadow-xl shadow-red-500/50' 
-              : 'bg-gradient-to-r from-indigo-800 to-purple-800'
-          } backdrop-blur-sm`}>
+          <div className="inline-block rounded-xl p-4 bg-gradient-to-r from-indigo-800 to-purple-800 backdrop-blur-sm">
             <div className="text-base font-semibold mb-3">
-              {timeLeft.isUrgent ? '🔥 最后冲刺！距结束仅剩：' : '距早鸟价结束仅剩：'}
+              距早鸟价结束仅剩：
             </div>
-            <div className="flex space-x-3 text-center">
-              {[
-                { value: timeLeft.days, label: "天" },
-                { value: timeLeft.hours, label: "时" },
-                { value: timeLeft.minutes, label: "分" },
-                { value: timeLeft.seconds, label: "秒" }
-              ].map((time, index) => (
-                <motion.div 
-                  key={index} 
-                  className={`min-w-[70px] ${
-                    timeLeft.isUrgent ? 'bg-white text-red-600' : 'bg-white text-indigo-900'
-                  } rounded-lg p-3 shadow-lg`}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    className="text-2xl font-bold mb-1"
-                    key={time.value}
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {String(time.value).padStart(2, '0')}
-                  </motion.div>
-                  <div className="text-xs font-medium">{time.label}</div>
-                </motion.div>
-              ))}
-            </div>
+            <FlipClockCountdown
+              to={targetDate}
+              className="realistic-flip-clock"
+            >
+              <div className="text-center text-white p-4">
+                <h3 className="text-2xl font-bold">活动已结束</h3>
+                <p>感谢您的关注！</p>
+              </div>
+            </FlipClockCountdown>
           </div>
         </motion.div>
 
@@ -570,20 +500,12 @@ const EnhancedPricingSection: React.FC = () => {
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       } flex items-center justify-center text-center`}
                     >
-                      {plan.seats === 0 ? (
-                        '🔒 已抢完'
-                      ) : plan.available ? (
+                      {plan.available ? (
                         plan.isPopular ? '🚀 立即抢占' : '📦 立即购买'
                       ) : (
                         '⏳ 排队预定'
                       )}
                     </AnimatedButton>
-                    
-                    {!plan.available && !plan.showSeats && (
-                      <p className="text-xs text-center text-gray-500 mt-2">
-                        等待前序方案售罄后开放
-                      </p>
-                    )}
                   </div>
                 </div>
               </AnimatedCard>
