@@ -324,50 +324,187 @@ function App() {
       <EnhancedPricingSection />
 
       {/* 区域7：价值打包区 */}
-      <AnimatedSection className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <AnimatedSection className="py-20 bg-white relative overflow-hidden">
+        {/* 背景装饰 */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              今天下单，您将获得总价值超过 <span className="text-indigo-600">¥15,000</span> 的大礼包！
+            {/* 限时标签 */}
+            <motion.div 
+              className="inline-flex items-center bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-bold mb-4"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <span className="mr-2">⚡</span>
+              限时赠送 · 仅此一次
+            </motion.div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              今天下单，您将获得总价值超过
             </h2>
+            
+            {/* 总价值动画显示 */}
+            <motion.div 
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl p-6 mb-8 max-w-2xl mx-auto"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className="text-4xl md:text-6xl font-bold mb-2">
+                <motion.span
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                >
+                  ¥15,000
+                </motion.span>
+              </div>
+              <div className="text-lg opacity-90">的超值大礼包！</div>
+              
+              {/* 节省金额对比 */}
+              <div className="mt-4 pt-4 border-t border-white/20">
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <div className="text-sm opacity-80">您只需支付</div>
+                    <div className="text-2xl font-bold text-yellow-300">¥3,999</div>
+                  </div>
+                  <div>
+                    <div className="text-sm opacity-80">立即节省</div>
+                    <div className="text-2xl font-bold text-green-300">¥11,001</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
           
           <AnimatedContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              { title: "决胜单N8N Agent工作流模板", value: "¥12,999", special: false },
-              { title: "超详细部署视频教程", value: "¥999", special: false },
-              { title: "30天部署问题专属技术支持", value: "¥1,999", special: false },
-              { title: "专属VIP用户交流群永久席位", value: "无价", special: false },
-              { title: "【天使合伙人专享】1对1在线部署指导", value: "¥2,999", special: true }
+              { 
+                title: "决胜单N8N Agent工作流模板", 
+                value: "¥12,999", 
+                special: false,
+                icon: "🤖",
+                description: "完整的AI决策工作流，即买即用"
+              },
+              { 
+                title: "超详细部署视频教程", 
+                value: "¥999", 
+                special: false,
+                icon: "📹",
+                description: "保姆级教学，零基础也能轻松上手"
+              },
+              { 
+                title: "30天部署问题专属技术支持", 
+                value: "¥1,999", 
+                special: false,
+                icon: "🛠️",
+                description: "专业技术团队一对一答疑解惑"
+              },
+              { 
+                title: "专属VIP用户交流群永久席位", 
+                value: "无价", 
+                special: false,
+                icon: "👥",
+                description: "与行业大佬深度交流，拓展人脉"
+              },
+              { 
+                title: "【天使合伙人专享】1对1在线部署指导", 
+                value: "¥2,999", 
+                special: true,
+                icon: "⭐",
+                description: "创始人亲自指导，手把手教学"
+              }
             ].map((benefit, index) => (
               <AnimatedItem key={index}>
                 <AnimatedCard 
-                  className={`${benefit.special ? 'bg-indigo-50 border-2 border-indigo-200' : 'bg-gray-50'} rounded-lg p-6 flex items-start space-x-4 h-full`}
-                  hoverScale={1.02}
+                  className={`${
+                    benefit.special 
+                      ? 'bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg' 
+                      : 'bg-white border border-gray-200 hover:border-indigo-300'
+                  } rounded-xl p-6 h-full transition-all duration-300 group relative overflow-hidden`}
+                  hoverScale={1.03}
                 >
-                  <motion.div 
-                    className={`${benefit.special ? 'text-indigo-500' : 'text-green-500'} text-xl`}
-                    whileHover={{ scale: 1.2 }}
-                  >
-                    ✓
-                  </motion.div>
-                  <div>
-                    <h4 className={`font-semibold mb-1 ${benefit.special ? 'text-indigo-800' : ''}`}>
-                      {benefit.title}
-                    </h4>
-                    <p className={`text-sm ${benefit.special ? 'text-indigo-600' : 'text-gray-600'}`}>
-                      价值 {benefit.value}
-                    </p>
+                  {/* 特殊标签 */}
+                  {benefit.special && (
+                    <motion.div 
+                      className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold"
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      专享
+                    </motion.div>
+                  )}
+                  
+                  <div className="flex items-start space-x-4">
+                    {/* 图标 */}
+                    <motion.div 
+                      className="text-3xl"
+                      whileHover={{ scale: 1.2, rotate: 10 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      {benefit.icon}
+                    </motion.div>
+                    
+                    <div className="flex-1">
+                      <h4 className={`font-bold mb-2 ${benefit.special ? 'text-indigo-800' : 'text-gray-900'}`}>
+                        {benefit.title}
+                      </h4>
+                      
+                      <p className={`text-sm mb-3 ${benefit.special ? 'text-indigo-600' : 'text-gray-600'}`}>
+                        {benefit.description}
+                      </p>
+                      
+                      {/* 价值标签 */}
+                      <motion.div 
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${
+                          benefit.special 
+                            ? 'bg-indigo-100 text-indigo-700' 
+                            : 'bg-green-100 text-green-700'
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        价值 {benefit.value}
+                      </motion.div>
+                    </div>
                   </div>
+                  
+                  {/* hover效果 */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={false}
+                  />
                 </AnimatedCard>
               </AnimatedItem>
             ))}
           </AnimatedContainer>
+          
+          {/* 底部总结 */}
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+          >
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 max-w-2xl mx-auto">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                💰 超值回报，一次投资受益终身！
+              </h3>
+              <p className="text-gray-600">
+                原价 ¥15,000 的完整解决方案，现在只需 ¥3,999，
+                <span className="font-bold text-green-600">节省74%</span>，
+                这样的机会不会再有第二次！
+              </p>
+            </div>
+          </motion.div>
         </div>
       </AnimatedSection>
 

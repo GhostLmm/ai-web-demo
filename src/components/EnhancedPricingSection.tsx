@@ -161,7 +161,7 @@ const EnhancedPricingSection: React.FC = () => {
 
   // 设置倒计时目标时间（72小时后），并确保它只被计算一次
   const [targetDate] = useState(() => new Date(Date.now() + 72 * 60 * 60 * 1000));
-  
+
   // 购买者名单
   const purchasers = [
     '深圳张总', '杭州李总', '广州王总', '北京刘总', '上海陈总',
@@ -350,11 +350,11 @@ const EnhancedPricingSection: React.FC = () => {
             <FlipClockCountdown
               to={targetDate}
               className="realistic-flip-clock"
-            >
+                >
               <div className="text-center text-white p-4">
                 <h3 className="text-2xl font-bold">活动已结束</h3>
                 <p>感谢您的关注！</p>
-              </div>
+            </div>
             </FlipClockCountdown>
           </div>
         </motion.div>
