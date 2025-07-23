@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 interface AgentTab {
@@ -17,7 +17,7 @@ const AutoTabDemo: React.FC = () => {
   const stepIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const tabSwitchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const agents: AgentTab[] = [
+  const agents: AgentTab[] = useMemo(() => [
     {
       id: 1,
       title: "全域数据专员",
@@ -74,7 +74,7 @@ const AutoTabDemo: React.FC = () => {
       color: "green",
       icon: "painpoint-confused"
     }
-  ];
+  ], []);
 
   // 清理所有定时器
   const clearTimers = useCallback(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
 import '@leenguyen/react-flip-clock-countdown/dist/index.css';
@@ -163,10 +163,10 @@ const EnhancedPricingSection: React.FC = () => {
   const [targetDate] = useState(() => new Date(Date.now() + 72 * 60 * 60 * 1000));
 
   // 购买者名单
-  const purchasers = [
+  const purchasers = useMemo(() => [
     '深圳张总', '杭州李总', '广州王总', '北京刘总', '上海陈总',
     '苏州赵总', '宁波周总', '青岛吴总', '成都郑总', '武汉钱总'
-  ];
+  ], []);
 
   // 模拟名额减少和购买提示
   useEffect(() => {
