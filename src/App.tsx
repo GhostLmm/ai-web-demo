@@ -5,6 +5,7 @@ import LiveAnalysisDemo from './components/LiveAnalysisDemo';
 import PainPointCard from './components/PainPointCard';
 import InteractiveCaseStudy from './components/InteractiveCaseStudy';
 import ROIShowcase from './components/ROIShowcase';
+import AutoTabDemo from './components/AutoTabDemo';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { AnimatedCounter, AnimatedNumber, PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
@@ -374,10 +375,10 @@ function App() {
       </AnimatedSection>
 
       {/* 区域4：原理揭秘区 */}
-      <AnimatedSection className="py-20 bg-white">
+      <AnimatedSection className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -387,52 +388,7 @@ function App() {
             </h2>
           </motion.div>
           
-          <div className="grid lg:grid-cols-2 gap-12">
-            <AnimatedContainer className="space-y-8">
-              {[
-                { num: 1, title: "全域数据专员", desc: "自动抓取亚马逊前台数据、最新差评和Q&A" },
-                { num: 2, title: "AI洞察分析师", desc: "利用大语言模型，深度分析和归纳差评背后的结构性问题与核心痛点" },
-                { num: 3, title: "资深风险评估官", desc: "运行独家风险评估模型，量化\"落单风险\"，输出精准分数" },
-                { num: 4, title: "首席汇报秘书", desc: "自动生成结构化、可视化的决策报告，并推送到您的微信或邮箱" }
-              ].map((step, index) => (
-                <AnimatedItem key={index} className="flex items-start space-x-4">
-                  <motion.div 
-                    className="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center"
-                    whileHover={{ scale: 1.1, backgroundColor: "#4f46e5" }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.span 
-                      className="text-indigo-600 font-bold"
-                      whileHover={{ color: "#ffffff" }}
-                    >
-                      {step.num}
-                    </motion.span>
-                  </motion.div>
-                  <div>
-                    <h4 className="text-lg font-bold mb-2">{step.title}</h4>
-                    <p className="text-gray-600">{step.desc}</p>
-                  </div>
-                </AnimatedItem>
-              ))}
-            </AnimatedContainer>
-            
-            <motion.div 
-              className="bg-gray-100 rounded-2xl p-8 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-            >
-              <motion.div 
-                className="text-center"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="text-6xl mb-4">🤖</div>
-                <div className="text-gray-600">AI工作流演示图</div>
-              </motion.div>
-            </motion.div>
-          </div>
+          <AutoTabDemo />
         </div>
       </AnimatedSection>
 
