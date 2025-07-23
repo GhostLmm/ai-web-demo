@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DemoReport from './components/DemoReport';
 import LiveAnalysisDemo from './components/LiveAnalysisDemo';
+import PainPointCard from './components/PainPointCard';
+import InteractiveCaseStudy from './components/InteractiveCaseStudy';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { AnimatedCounter, AnimatedNumber, PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
@@ -252,51 +254,96 @@ function App() {
       <AnimatedSection className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-16"
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            你是否也曾因为一次错误的补货，<br />亏掉数万利润？
+            你是否也曾因为一次错误的补货，<br />
+            <span className="text-red-600">亏掉数万利润？</span>
           </motion.h2>
           
-          <AnimatedContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {[
-              { icon: "confused", title: "凭感觉补货", desc: "心里没底，夜夜难眠" },
-              { icon: "warning", title: "差评突然增多", desc: "不知源头，应对无力" },
-              { icon: "manual", title: "团队手动分析", desc: "耗时耗力，效率低下" },
-              { icon: "decline", title: "误判形势", desc: "库存积压，资金占用" }
-            ].map((pain, index) => (
-              <AnimatedItem key={index} className="p-6">
-                <AnimatedCard className="h-full">
-                  <motion.div 
-                    className="mb-4 h-32 flex items-center justify-center"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Icon type={pain.icon as any} />
-                  </motion.div>
-                  <h3 className="text-lg font-semibold mb-2">{pain.title}</h3>
-                  <p className="text-gray-600">{pain.desc}</p>
-                </AnimatedCard>
-              </AnimatedItem>
-            ))}
-          </AnimatedContainer>
-
-          <motion.div 
-            className="bg-red-50 border-l-4 border-red-500 p-6 max-w-4xl mx-auto text-left"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.p 
+            className="text-lg text-gray-600 mb-16 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 0.3 }}
           >
-            <h4 className="font-bold text-red-800 mb-2">深圳卖家张总的教训：</h4>
-            <p className="text-red-700">
-              一款月销3000件的爆款，因未及时发现材料相关的差评增多，盲目追单5000件，
-              最终导致差评爆发，链接被限制，库存价值30万的货砸在手里...
-            </p>
-          </motion.div>
+            每一个亚马逊卖家都可能遇到这些痛点，一个错误的决策就可能让几个月的努力付之东流...
+          </motion.p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {[
+              {
+                iconType: "painpoint-confused" as const,
+                title: "凭感觉补货",
+                description: "心里没底，夜夜难眠",
+                details: [
+                  "没有数据支撑，全凭经验判断",
+                  "担心断货，又怕库存积压", 
+                  "每次下单都是一次赌博",
+                  "压力巨大，影响决策质量"
+                ],
+                impact: "决策失误率高达60%",
+                color: "red" as const
+              },
+              {
+                iconType: "painpoint-review" as const,
+                title: "差评突然增多", 
+                description: "不知源头，应对无力",
+                details: [
+                  "差评出现时已经来不及",
+                  "不知道问题的根本原因",
+                  "无法预判趋势走向",
+                  "被动应对，损失巨大"
+                ],
+                impact: "销量可能瞬间归零",
+                color: "orange" as const
+              },
+              {
+                iconType: "painpoint-analysis" as const,
+                title: "团队手动分析",
+                description: "耗时耗力，效率低下", 
+                details: [
+                  "人工分析需要2-3天时间",
+                  "员工成本高，准确性低",
+                  "无法处理海量数据",
+                  "分析结果主观性强"
+                ],
+                impact: "错过最佳决策时机",
+                color: "yellow" as const
+              },
+              {
+                iconType: "painpoint-lifecycle" as const,
+                title: "爆款生命周期末期",
+                description: "误判形势，库存积压",
+                details: [
+                  "无法判断产品生命周期",
+                  "错误预估市场需求",
+                  "库存周转率急剧下降",
+                  "资金链面临巨大压力"
+                ],
+                impact: "库存积压损失惨重",
+                color: "purple" as const
+              }
+            ].map((pain, index) => (
+              <PainPointCard
+                key={index}
+                iconType={pain.iconType}
+                title={pain.title}
+                description={pain.description}
+                details={pain.details}
+                impact={pain.impact}
+                color={pain.color}
+                index={index}
+              />
+            ))}
+          </div>
+
+          {/* 真实案例警示 */}
+          <InteractiveCaseStudy />
         </div>
       </AnimatedSection>
 
