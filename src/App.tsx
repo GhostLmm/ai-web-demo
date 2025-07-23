@@ -4,6 +4,7 @@ import DemoReport from './components/DemoReport';
 import LiveAnalysisDemo from './components/LiveAnalysisDemo';
 import PainPointCard from './components/PainPointCard';
 import InteractiveCaseStudy from './components/InteractiveCaseStudy';
+import ROIShowcase from './components/ROIShowcase';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { AnimatedCounter, AnimatedNumber, PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
@@ -348,10 +349,10 @@ function App() {
       </AnimatedSection>
 
       {/* 区域3：解决方案区 */}
-      <AnimatedSection className="py-20 bg-gray-50">
+      <AnimatedSection className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -359,7 +360,7 @@ function App() {
             是时候改变了！隆重介绍：
           </motion.h2>
           <motion.h3 
-            className="text-4xl md:text-5xl font-bold text-indigo-600 mb-16"
+            className="text-4xl md:text-5xl font-bold text-indigo-600 mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -368,27 +369,7 @@ function App() {
             "决胜单"——您的AI采购决策顾问
           </motion.h3>
           
-          <AnimatedContainer className="grid md:grid-cols-3 gap-8">
-            {[
-              { emoji: "📊", title: "100%数据驱动", desc: "告别直觉，让每一个采购决策都有据可依" },
-              { emoji: "🚨", title: "24/7风险预警", desc: "自动监控差评和痛点，在问题爆发前发出警报" },
-              { emoji: "⚡", title: "90%效率提升", desc: "从数小时的人工分析，到3分钟的自动化报告" }
-            ].map((feature, index) => (
-              <AnimatedItem key={index}>
-                <AnimatedCard className="bg-white rounded-xl p-8 shadow-lg h-full">
-                  <motion.div 
-                    className="text-5xl mb-6"
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {feature.emoji}
-                  </motion.div>
-                  <h4 className="text-xl font-bold mb-4">{feature.title}</h4>
-                  <p className="text-gray-600">{feature.desc}</p>
-                </AnimatedCard>
-              </AnimatedItem>
-            ))}
-          </AnimatedContainer>
+          <ROIShowcase />
         </div>
       </AnimatedSection>
 
