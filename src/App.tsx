@@ -7,6 +7,7 @@ import InteractiveCaseStudy from './components/InteractiveCaseStudy';
 import ROIShowcase from './components/ROIShowcase';
 import AutoTabDemo from './components/AutoTabDemo';
 import EnhancedPricingSection from './components/EnhancedPricingSection';
+import FAQSection from './components/FAQSection';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { PulseAnimation } from './components/AnimatedCounter';
 import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
@@ -607,66 +608,195 @@ function App() {
       {/* 区域9：风险逆转区 & FAQ */}
       <AnimatedSection className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* 零风险承诺 */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <AnimatedCard className="bg-green-50 border-2 border-green-200 rounded-2xl p-8 max-w-4xl mx-auto">
-              <motion.div 
-                className="text-green-600 text-4xl mb-4"
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🛡️
-              </motion.div>
-              <h3 className="text-2xl font-bold text-green-800 mb-4">我们郑重承诺</h3>
-              <p className="text-green-700 text-lg">
-                购买后30天内，若因我们的模板或指导问题导致您无法成功部署，我们将全额退款！
-              </p>
-            </AnimatedCard>
+            <div className="text-sm font-semibold text-blue-600 mb-2 uppercase tracking-wide">
+              FAQ
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              风险逆转 & 常见问题解答
+            </h2>
           </motion.div>
-          
-          {/* FAQ */}
-          <div className="max-w-4xl mx-auto">
-            <motion.h3 
-              className="text-2xl font-bold text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+
+          {/* 左右布局 */}
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* 左侧：风险逆转和联系方式 */}
+            <motion.div 
+              className="space-y-8"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
             >
-              常见问题解答
-            </motion.h3>
-            
-            <AnimatedContainer className="space-y-6">
-              {[
-                {
-                  q: "我是技术小白，能用吗？",
-                  a: "当然！我们的视频教程是保姆级的，并且提供30天支持，保证您能用上。"
-                },
-                {
-                  q: "购买后还有其他费用吗？",
-                  a: "本工具是一次性付费。但您需要自备N8N环境、OpenAI API Key等，这些第三方服务的费用需要您自行承担。"
-                },
-                {
-                  q: "我的数据安全吗？",
-                  a: "绝对安全。整个工具部署在您自己的N8N服务器上，所有数据都在您本地处理，我们不触碰您的任何业务数据。"
-                },
-                {
-                  q: "支持哪些电商平台？",
-                  a: "目前主要支持亚马逊美国站，后续会逐步支持其他站点和平台。"
-                }
-              ].map((faq, index) => (
-                <AnimatedItem key={index}>
-                  <AnimatedCard className="bg-gray-50 rounded-lg p-6">
-                    <h4 className="font-bold mb-2">Q: {faq.q}</h4>
-                    <p className="text-gray-600">A: {faq.a}</p>
-                  </AnimatedCard>
-                </AnimatedItem>
-              ))}
-            </AnimatedContainer>
+              {/* 郑重承诺 - 强化版 */}
+              <AnimatedCard className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border-2 border-green-300 rounded-xl p-6 shadow-lg overflow-hidden">
+                {/* 背景装饰 */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-green-200 rounded-full opacity-20 -translate-y-10 translate-x-10"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-emerald-200 rounded-full opacity-20 translate-y-8 -translate-x-8"></div>
+                
+                <div className="relative text-center">
+                  {/* 醒目的盾牌图标 */}
+                  <motion.div 
+                    className="inline-flex items-center justify-center w-16 h-16 bg-green-600 text-white rounded-full mb-4 shadow-lg"
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      boxShadow: [
+                        "0 4px 20px rgba(34, 197, 94, 0.3)",
+                        "0 6px 30px rgba(34, 197, 94, 0.5)",
+                        "0 4px 20px rgba(34, 197, 94, 0.3)"
+                      ]
+                    }}
+                    transition={{ 
+                      duration: 3, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </motion.div>
+                  
+                  {/* 强化标题 */}
+                  <motion.h3 
+                    className="text-xl font-bold text-green-800 mb-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    💯 我们郑重承诺
+                  </motion.h3>
+                  
+                  {/* 主要承诺文案 */}
+                  <motion.div 
+                    className="bg-white/70 backdrop-blur-sm border border-green-200 rounded-lg p-4 mb-4"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <p className="text-green-800 font-semibold leading-relaxed">
+                      购买后<span className="text-xl font-bold text-green-600">30天内</span>，
+                      若因我们的模板或指导问题导致您无法成功部署，
+                    </p>
+                    <motion.p 
+                      className="text-lg font-bold text-green-700 mt-2"
+                      animate={{ 
+                        textShadow: [
+                          "0 0 0px rgba(34, 197, 94, 0)",
+                          "0 0 10px rgba(34, 197, 94, 0.3)",
+                          "0 0 0px rgba(34, 197, 94, 0)"
+                        ]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      🔥 我们将全额退款！
+                    </motion.p>
+                  </motion.div>
+                  
+                  {/* 三大保证 */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { icon: "🕒", title: "30天退款", desc: "无条件" },
+                      { icon: "👨‍💻", title: "专业支持", desc: "1对1指导" },
+                      { icon: "⚡", title: "零风险", desc: "100%保障" }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        className="bg-white/80 rounded-lg p-3 border border-green-200"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.6 + index * 0.1 }}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                      >
+                        <div className="text-xl mb-1">{item.icon}</div>
+                        <div className="text-sm font-bold text-green-800">{item.title}</div>
+                        <div className="text-xs text-green-600">{item.desc}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                  
+                  {/* 信任标志 */}
+                  <motion.div 
+                    className="mt-4 pt-4 border-t border-green-300"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    <div className="flex justify-center items-center space-x-4 text-green-700">
+                      <div className="flex items-center text-xs">
+                        <span className="text-green-600 mr-1">🏆</span>
+                        <span>8年信誉保证</span>
+                      </div>
+                      <div className="flex items-center text-xs">
+                        <span className="text-green-600 mr-1">🔒</span>
+                        <span>安全交易</span>
+                      </div>
+                      <div className="flex items-center text-xs">
+                        <span className="text-green-600 mr-1">⭐</span>
+                        <span>五星好评</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </AnimatedCard>
+
+              {/* 联系方式 */}
+              <AnimatedCard className="bg-gradient-to-br from-gray-50 to-blue-50 border border-gray-200 rounded-xl p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">还有其他问题？我们随时为您解答</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <motion.a
+                    href="mailto:support@decision-win.com"
+                    className="flex flex-col items-center p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <svg className="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <div className="font-medium text-sm">邮件咨询</div>
+                  </motion.a>
+                  
+                  <motion.a
+                    href="#"
+                    className="flex flex-col items-center p-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-center"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <svg className="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                    </svg>
+                    <div className="font-medium text-sm">微信客服</div>
+                  </motion.a>
+                </div>
+                
+                {/* 联系信息 */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <div className="text-center space-y-1">
+                    <div className="text-xs text-gray-600">邮箱：support@decision-win.com</div>
+                    <div className="text-xs text-gray-600">微信：DecisionWin2024</div>
+                  </div>
+                </div>
+              </AnimatedCard>
+            </motion.div>
+
+            {/* 右侧：FAQ */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <FAQSection variant="decision" defaultOpen="faq-decision-1" compact={true} />
+            </motion.div>
           </div>
         </div>
       </AnimatedSection>
