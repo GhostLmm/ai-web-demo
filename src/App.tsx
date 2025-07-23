@@ -241,15 +241,14 @@ function App() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <AnimatedCard className="bg-white rounded-2xl shadow-2xl p-6">
-                <div className="bg-gray-100 rounded-lg h-80 flex items-center justify-center">
-                  <motion.div 
-                    className="text-center"
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <div className="text-4xl mb-4">📊</div>
-                    <div className="text-gray-600">AI决策报告演示</div>
-                  </motion.div>
+                <div className="bg-gray-100 rounded-lg h-80 flex items-center justify-center overflow-hidden">
+                  <motion.img
+                    src="/hero-image.png"
+                    alt="AI决策大脑"
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </div>
               </AnimatedCard>
             </motion.div>
@@ -272,19 +271,19 @@ function App() {
           
           <AnimatedContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {[
-              { emoji: "😰", title: "凭感觉补货", desc: "心里没底，夜夜难眠" },
-              { emoji: "😵", title: "差评突然增多", desc: "不知源头，应对无力" },
-              { emoji: "⏰", title: "团队手动分析", desc: "耗时耗力，效率低下" },
-              { emoji: "📉", title: "误判形势", desc: "库存积压，资金占用" }
+              { img: "/pain-point-1.png", title: "凭感觉补货", desc: "心里没底，夜夜难眠" },
+              { img: "/pain-point-2.png", title: "差评突然增多", desc: "不知源头，应对无力" },
+              { img: "/pain-point-3.png", title: "团队手动分析", desc: "耗时耗力，效率低下" },
+              { img: "/pain-point-4.png", title: "误判形势", desc: "库存积压，资金占用" }
             ].map((pain, index) => (
               <AnimatedItem key={index} className="p-6">
                 <AnimatedCard className="h-full">
                   <motion.div 
-                    className="text-4xl mb-4"
-                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    className="mb-4 h-32 flex items-center justify-center"
+                    whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {pain.emoji}
+                    <img src={pain.img} alt={pain.title} className="max-h-full max-w-full object-contain" />
                   </motion.div>
                   <h3 className="text-lg font-semibold mb-2">{pain.title}</h3>
                   <p className="text-gray-600">{pain.desc}</p>
