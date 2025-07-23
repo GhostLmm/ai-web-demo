@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedButton, AnimatedCard } from './AnimatedButton';
 import { AnimatedCounter, AnimatedNumber } from './AnimatedCounter';
@@ -13,38 +13,41 @@ const useCountdown = (targetDate: Date) => {
     isUrgent: false
   });
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
+  const calculateTimeLeft = useCallback(() => {
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
 
-      if (distance > 0) {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        // 最后24小时标记为紧急
-        const totalHoursLeft = days * 24 + hours;
-        
-        setTimeLeft({
-          days,
-          hours,
-          minutes,
-          seconds,
-          isUrgent: totalHoursLeft <= 24
-        });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, isUrgent: true });
-      }
-    };
-
-    // 立即执行一次
-    updateTime();
-    
-    const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // 最后24小时标记为紧急
+      const totalHoursLeft = days * 24 + hours;
+      
+      return {
+        days,
+        hours,
+        minutes,
+        seconds,
+        isUrgent: totalHoursLeft <= 24
+      };
+    } else {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0, isUrgent: true };
+    }
   }, [targetDate]);
+
+  useEffect(() => {
+    // 立即执行一次计算
+    setTimeLeft(calculateTimeLeft());
+    
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, [calculateTimeLeft]);
 
   return timeLeft;
 };
@@ -203,8 +206,8 @@ const EnhancedPricingSection: React.FC = () => {
   // 闪烁状态
   const [flashingTier, setFlashingTier] = useState<string | null>(null);
 
-  // 设置倒计时目标时间（72小时后）
-  const targetDate = new Date(Date.now() + 72 * 60 * 60 * 1000);
+  // 设置倒计时目标时间（72小时后），并确保它只被计算一次
+  const [targetDate] = useState(() => new Date(Date.now() + 72 * 60 * 60 * 1000));
   const timeLeft = useCountdown(targetDate);
 
   // 购买者名单
@@ -427,7 +430,7 @@ const EnhancedPricingSection: React.FC = () => {
         </motion.div>
 
         {/* 价格方案 */}
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
@@ -466,7 +469,7 @@ const EnhancedPricingSection: React.FC = () => {
               )}
 
               <AnimatedCard
-                className={`h-full bg-white text-gray-900 rounded-2xl p-8 relative overflow-hidden ${
+                className={`h-full bg-white text-gray-900 rounded-2xl p-8 relative overflow-hidden flex flex-col ${
                   plan.isPopular ? 'ring-4 ring-yellow-400 shadow-2xl' : 'shadow-xl'
                 } ${flashingTier === plan.id ? 'ring-4 ring-red-500' : ''}`}
                 hoverScale={1.02}
@@ -476,7 +479,7 @@ const EnhancedPricingSection: React.FC = () => {
                   plan.isPopular ? 'bg-yellow-400' : 'bg-indigo-400'
                 } rounded-full -mr-16 -mt-16`}></div>
 
-                <div className="relative z-10 h-full flex flex-col">
+                <div className="relative z-10 flex-1 flex flex-col">
                   {/* 方案标题 */}
                   <div className="text-center mb-4">
                     <h3 className="text-xl font-bold mb-2">{plan.title}</h3>
@@ -559,13 +562,13 @@ const EnhancedPricingSection: React.FC = () => {
                     <AnimatedButton
                       onClick={() => handlePurchase(plan)}
                       disabled={!plan.available}
-                      className={`w-full py-3 text-base font-bold ${
+                      className={`w-full py-4 px-6 text-base font-bold rounded-xl transition-all duration-300 ${
                         plan.available
                           ? plan.isPopular
-                            ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white'
-                            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white'
+                            ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      }`}
+                      } flex items-center justify-center text-center`}
                     >
                       {plan.seats === 0 ? (
                         '🔒 已抢完'
