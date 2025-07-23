@@ -625,7 +625,7 @@ function App() {
           {/* 左右布局 */}
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* 左侧：风险逆转和联系方式 */}
-            <motion.div 
+              <motion.div 
               className="space-y-8"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -659,19 +659,19 @@ function App() {
                     <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                  </motion.div>
-                  
+          </motion.div>
+          
                   {/* 强化标题 */}
-                  <motion.h3 
+            <motion.h3 
                     className="text-xl font-bold text-green-800 mb-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
-                  >
+            >
                     💯 我们郑重承诺
-                  </motion.h3>
-                  
+            </motion.h3>
+            
                   {/* 主要承诺文案 */}
                   <motion.div 
                     className="bg-white/70 backdrop-blur-sm border border-green-200 rounded-lg p-4 mb-4"
@@ -801,54 +801,98 @@ function App() {
         </div>
       </AnimatedSection>
 
-      {/* 区域10：最终号召区 */}
-      <AnimatedSection className="py-20 bg-indigo-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* 区域10：最终号召区 - 强化版 */}
+      <AnimatedSection className="relative py-20 bg-gradient-to-br from-red-600 via-purple-700 to-indigo-900 text-white overflow-hidden">
+        {/* 动态背景效果 */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500 rounded-full opacity-10 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-yellow-500 rounded-full opacity-10 blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white rounded-full opacity-5 blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* 警告标签 */}
+          <motion.div
+            className="inline-flex items-center bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            animate={{ 
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 0 0 0 rgba(239, 68, 68, 0.4)",
+                "0 0 0 10px rgba(239, 68, 68, 0)",
+                "0 0 0 0 rgba(239, 68, 68, 0)"
+              ]
+            }}
+            transition={{ 
+              scale: { duration: 2, repeat: Infinity },
+              boxShadow: { duration: 2, repeat: Infinity }
+            }}
+          >
+            <span className="mr-2">⚠️</span>
+            最后机会 - 错过不再有
+          </motion.div>
+
+          {/* 主标题 */}
           <motion.h2 
-            className="text-3xl md:text-4xl font-bold mb-8"
+            className="text-4xl md:text-6xl font-bold mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            最后的机会
+            <span className="text-yellow-400">最后的机会</span>
           </motion.h2>
-          <motion.p 
-            className="text-xl text-indigo-200 mb-8 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+
+          {/* 损失警示 */}
+          <motion.div 
+            className="bg-red-500/20 border-2 border-red-400 rounded-xl p-6 mb-8 max-w-4xl mx-auto backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            一次错误的补货决策，损失的可能就是几万甚至几十万。而今天，只需一笔小小的投资，
-            就能拥有一个永不疲倦的AI决策大脑。
-          </motion.p>
-          <motion.p 
-            className="text-lg text-indigo-300 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            天使合伙人席位即将售罄，价格马上上涨。立即行动，锁定骨折优惠！
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-          >
-            <PulseAnimation intensity={1.1}>
-              <AnimatedButton
-                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                variant="primary"
-                size="lg"
-                className="bg-white text-indigo-900 hover:bg-gray-100"
-              >
-                立即抢占最后席位，告别采购赌博！
-              </AnimatedButton>
-            </PulseAnimation>
+            <div className="text-2xl font-bold text-red-200 mb-3">⚡ 风险警告</div>
+            <p className="text-xl leading-relaxed">
+              一次错误的补货决策，损失的可能就是
+              <span className="text-yellow-400 font-bold text-2xl mx-2">几万甚至几十万</span>
+              而今天，只需一笔小小的投资，就能拥有一个永不疲倦的AI决策大脑。
+            </p>
           </motion.div>
+
+          
+
+                     {/* 最终行动号召 */}
+           <motion.div 
+             className="text-center"
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             transition={{ delay: 0.4 }}
+           >
+             <div className="text-xl font-bold text-yellow-300 mb-8">
+               天使合伙人席位即将售罄，价格马上上涨。立即行动，锁定骨折优惠！
+             </div>
+             
+             <motion.div
+               className="flex justify-center"
+               initial={{ opacity: 0, scale: 0.8 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ delay: 0.6 }}
+             >
+               <PulseAnimation intensity={1.2}>
+                 <AnimatedButton
+                   onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+                   variant="primary"
+                   size="lg"
+                   className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black hover:from-yellow-300 hover:to-orange-400 font-bold text-xl px-12 py-4 shadow-2xl"
+                 >
+                   🚀 立即抢占最后席位，告别采购赌博！
+                 </AnimatedButton>
+               </PulseAnimation>
+             </motion.div>
+           </motion.div>
         </div>
       </AnimatedSection>
 
