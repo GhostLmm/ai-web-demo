@@ -10,7 +10,7 @@ import EnhancedPricingSection from './components/EnhancedPricingSection';
 import FAQSection from './components/FAQSection';
 import { AnimatedSection, AnimatedContainer, AnimatedItem } from './components/AnimatedSection';
 import { PulseAnimation } from './components/AnimatedCounter';
-import { AnimatedButton, AnimatedCard, FloatingActionButton } from './components/AnimatedButton';
+import { AnimatedButton, AnimatedCard } from './components/AnimatedButton';
 
 
 
@@ -921,12 +921,86 @@ function App() {
 
 
 
-      {/* 浮动按钮 */}
-      <FloatingActionButton 
-        onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+      {/* 浮动购买按钮 */}
+      <motion.div
+        className="fixed bottom-6 right-6 z-50"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, duration: 0.5, type: "spring" }}
       >
-        💰
-      </FloatingActionButton>
+        <motion.button
+          onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+          className="relative w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:from-orange-400 hover:to-red-500 transition-all duration-300 group"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          animate={{
+            rotate: [0, -10, 10, -10, 10, 0],
+            scale: [1, 1.1, 1, 1.1, 1, 1]
+          }}
+          transition={{
+            rotate: { 
+              duration: 0.6,
+              repeat: Infinity,
+              repeatDelay: 3,
+              ease: "easeInOut"
+            },
+            scale: {
+              duration: 0.6,
+              repeat: Infinity,
+              repeatDelay: 3,
+              ease: "easeInOut"
+            }
+          }}
+        >
+          {/* 购物车图标 */}
+          <svg 
+            className="w-8 h-8" 
+            fill="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+
+          {/* 脉冲效果 */}
+          <motion.div
+            className="absolute inset-0 rounded-full bg-orange-400 opacity-20"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 0, 0.3]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* 购买提示文字 */}
+          <motion.div
+            className="absolute -top-12 -left-4 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            initial={{ opacity: 0, y: 10 }}
+            whileHover={{ opacity: 1, y: 0 }}
+          >
+            立即购买
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
+          </motion.div>
+
+          {/* 价格标签 */}
+          <motion.div
+            className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full"
+            animate={{
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              repeatDelay: 2
+            }}
+          >
+            ¥3999
+          </motion.div>
+        </motion.button>
+      </motion.div>
     </div>
   );
 }
