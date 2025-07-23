@@ -1,0 +1,24 @@
+{
+  "currentState": "initialized",
+  "stateHistory": [
+    {
+      "from": "initial",
+      "command": "learn",
+      "timestamp": "2025-07-23T02:30:54.026Z",
+      "args": [
+        "@manual://jimengpic"
+      ]
+    },
+    {
+      "from": "learn_error",
+      "command": "init",
+      "timestamp": "2025-07-23T02:31:00.949Z",
+      "args": [
+        {
+          "workingDirectory": "E:/code-ai/15-工具demo"
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2025-07-23T02:31:00.998Z"
+}
